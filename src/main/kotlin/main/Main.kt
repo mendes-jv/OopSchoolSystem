@@ -1,3 +1,6 @@
+import courses.Course
+import students.Student
+
 fun main() {
 
     val john = Student("John", "Hill", 7, 99.99)
@@ -8,11 +11,18 @@ fun main() {
 
     john.printFullName()
     john.changeYearIfApproved()
-    println(john.year)
+    println(john.getYear())
     logic.enroll(john)
     logic.countStudents()
     logic.enroll(studentAddList)
     logic.countStudents()
     logic.unEnroll(lucas)
     logic.countStudents()
+
+    try {
+        logic.searchStudent(lucas)
+    } catch(e: Exception) {
+        println(e.message)
+    }
+
 }

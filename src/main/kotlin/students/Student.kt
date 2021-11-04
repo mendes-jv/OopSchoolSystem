@@ -1,8 +1,11 @@
-class Student(val firstName: String, val lastName: String?) {
+package students
 
-    var registration = 0
-    var grade = 0.0
-    var year = 0
+class Student(private val firstName: String,
+              private val lastName: String?) {
+
+    private var registration = 0
+    private var grade = 0.0
+    private var year = 1
 
     constructor(firstName: String,
                 lastName: String,
@@ -36,5 +39,21 @@ class Student(val firstName: String, val lastName: String?) {
             year++
             println("Congratulations! You were approved.")
         } else println("Oh no! You failed.")
+    }
+
+    fun getGrade(): Double {
+        return this.grade
+    }
+
+    fun getName(): String {
+        return this.firstName
+    }
+
+    fun getFullName(): String {
+        return "${this.firstName} ${this.lastName}"
+    }
+
+    fun getYear(): Int {
+        return this.year
     }
 }
