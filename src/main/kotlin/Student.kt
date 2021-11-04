@@ -1,4 +1,4 @@
-class Student constructor(val firstName: String, val lastName: String) {
+class Student(val firstName: String, val lastName: String?) {
 
     var registration = 0
     var grade = 0.0
@@ -26,18 +26,15 @@ class Student constructor(val firstName: String, val lastName: String) {
         println("The student's full name is: $firstName $lastName")
     }
 
-    var isApproved = false
+    private val isApproved: Boolean
         get() {
-            if (grade >= 60) this.isApproved = true
-            return field
+            return grade >= 60
         }
 
-    fun changeYearIfApproved() {
-        if (isApproved) {
-            this.year = year++
-            println("Congratulations!")
-        }
+    fun changeYearIfApproved(){
+        if(isApproved) {
+            year++
+            println("Congratulations! You were approved.")
+        } else println("Oh no! You failed.")
     }
-
-
 }

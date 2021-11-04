@@ -1,42 +1,59 @@
-class Course constructor(val courseName: String,
-                         val professorName: String,
-                         val year:String){
+class Course(val courseName: String,
+             val professorName: String,
+             val year:Int){
 
-    val studentsList= mutableListOf<Student>()
+    private val studentsList= mutableListOf<Student?>()
 
     fun enroll(student: Student?) {
-        if (student != null) {
-            studentsList.add(student)
+        studentsList.add(student)
+        println("Student ${student!!.firstName} ${student.lastName} was added to " +
+                "$courseName.")
+    }
+
+    fun enroll(student: Array<Student?>?) {
+        student!!.forEach {
+            studentsList.add(it)
+            println("Student ${it!!.firstName} ${it.lastName} was added to " +
+                    "$courseName.")
         }
     }
 
     fun unEnroll(student: Student?) {
-        print("Are you sure ou want to remove $student from $courseName?" +
-               "\nType \"yes\" to remove or \"no\" to cancel:")
-        when (readLine()!!.lowercase()) {
-            "yes" -> studentsList.remove(student)
-            "no" -> println("$student was not removed.")
+        if(studentsList.contains(student)) {
+            print("Are you sure ou want to remove Student ${student!!.firstName} " +
+                    "${student.lastName} from $courseName?\nType \"yes\" to remove or " +
+                    "\"no\" to cancel: ")
+            when(readLine()!!.lowercase()) {
+                "yes" -> {
+                    studentsList.remove(student)
+                    println("Student ${student.firstName} ${student.lastName} " +
+                            "was removed from $courseName.")
+                }
+                "no" -> println("Student ${student.firstName} ${student.lastName} " +
+                        "was not removed from $courseName.")
+                else -> println("Specified command was not found.")
+            }
         }
     }
 
     fun countStudents() {
-        when (studentsList.size) {
+        when(studentsList.size) {
             0 -> println("There isn't students in this , yet.")
             1 -> println("There is only 1 student in this course.")
             else -> println("There are ${studentsList.size} students in this course.")
         }
     }
 
-    fun bestGrade(){
-        var bestGradeInCourse = 0.0
-        var bestStudentInCourse = ""
+    fun bestStudentAndGrade(){
+        var bestGrade = studentsList[0]?.grade
+        var bestStudent = "${studentsList[0]?.firstName} ${studentsList[0]?.lastName}"
         studentsList.forEach {
-            if (it.grade > bestGradeInCourse) {
-                bestGradeInCourse = it.grade
-                bestStudentInCourse = "${it.firstName} ${it.lastName}"
+            if (it?.grade!! > bestGrade!!) {
+                bestGrade = it.grade
+                bestStudent = "${it.firstName} ${it.lastName}"
             }
         }
-        println("The best grade in the course is: $bestGradeInCourse " +
-                "from $bestStudentInCourse.")
+        println("The best grade in the course is $bestGrade " +
+                "from $bestStudent.")
     }
 }
